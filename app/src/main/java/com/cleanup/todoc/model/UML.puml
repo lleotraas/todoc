@@ -1,0 +1,10 @@
+ @startuml
+    Project:id long NOT NULL [PK]
+    Project:name String NOT NULL
+    Project:color int NOT NULL
+    Project->Task
+    Task:id long NOT NULL [PK]
+    Task:project_id long NOT NULL [FK]
+    Task:name String NOT NULL
+    Task:creationTimeStamp long NOT NULL
+ @enduml
