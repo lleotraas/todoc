@@ -20,10 +20,10 @@ public class Injection {
         return  new TaskDataRepository(database.taskDao());
     }
 
-//    public static ProjectDataRepository provideProjectDataSource(Context context){
-//        ProjectDatabase database = ProjectDatabase.getInstance(context);
-//        return  new ProjectDataRepository(database.projectDao());
-//    }
+    public static ProjectDataRepository provideProjectDataSource(Context context){
+        ProjectDatabase database = ProjectDatabase.getInstance(context);
+        return  new ProjectDataRepository(database.projectDao());
+    }
 
     public static Executor provideExecutor(){
         return Executors.newSingleThreadExecutor();
@@ -31,8 +31,8 @@ public class Injection {
 
     public static ViewModelFactory provideViewModelFactory(Context context){
         TaskDataRepository dataSourceTask = provideTaskDataSource(context);
-//        ProjectDataRepository dataSourceProject = provideProjectDataSource(context);
+        ProjectDataRepository dataSourceProject = provideProjectDataSource(context);
         Executor executor = provideExecutor();
-        return new ViewModelFactory(dataSourceTask,executor);
+        return new ViewModelFactory(dataSourceProject, dataSourceTask,executor);
     }
 }

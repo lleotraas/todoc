@@ -93,13 +93,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private TextView lblNoTasks;
 
     private TaskViewModel mTaskViewModel;
-    private int TASK_ID = 1;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         listTasks = findViewById(R.id.list_tasks);
@@ -109,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks.setAdapter(adapter);
 
         this.configureViewModel();
+        this.getAllTasks();
 
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,35 +143,30 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-        updateTasks();
+        this.getAllTasks();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // --- GET CURRENT PROJECT ---
+    private void getCurrentProject(long projectId){
+        this.mTaskViewModel.getProject(projectId).observe(this, this::getCurrentProjectId);
+    }
+
+    private long getCurrentProjectId(Project project) {
+        return project.getId();
+    }
+
+    // --- GET ALL TASKS ---
+    private void getAllTasks(){
+        this.mTaskViewModel.getAllTasks().observe(this, this::updateTasks);
     }
 
     @Override
     public void onDeleteTask(Task task) {
         tasks.remove(task);
-        updateTasks();
+        this.getAllTasks();
         this.mTaskViewModel.deleteTask(task.getId());
-    }
-
-//    // --- GET CURRENT PROJECT ---
-//    private void getCurrentProfile(int projectId){
-//        this.mTaskViewModel.getProject(projectId).observe(this, this::updateProjectList);
-//    }
-
-    // --- GET ALL TASKS FOR A PROFILE
-    private void getTasks(int projectId){
-        this.mTaskViewModel.getTask(projectId).observe(this, this::updateTaskList);
-    }
-
-//    // --- UPDATE ---
-//    private void updateProjectList(Project project) {
-//
-//    }
-
-    private void updateTaskList(List<Task> tasks) {
-        this.adapter.updateTasks(tasks);
     }
 
 
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If both project and name of the task have been set
             else if (taskProject != null) {
                 // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
+                long id = this.getCurrentProjectId(taskProject);
 
 
                 Task task = new Task(
@@ -210,9 +204,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 );
 
                 addTask(task);
-
-                this.mTaskViewModel.createTask(task);
-                this.mTaskViewModel.updateTask(task);
 
                 dialogInterface.dismiss();
             }
@@ -248,14 +239,14 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     private void addTask(@NonNull Task task) {
         tasks.add(task);
-        updateTasks();
-        this.mTaskViewModel.updateTask(task);
+        updateTasks(tasks);
+        this.mTaskViewModel.createTask(task);
     }
 
     /**
      * Updates the list of tasks in the UI
      */
-    private void updateTasks() {
+    private void updateTasks(List<Task> tasks) {
         if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
