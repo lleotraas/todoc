@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @SuppressWarnings("NullableProblems")
     @NonNull
     private TextView lblNoTasks;
-
     private TaskViewModel mTaskViewModel;
 
 
