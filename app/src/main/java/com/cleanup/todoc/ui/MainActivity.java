@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.database.ProjectDatabase;
 import com.cleanup.todoc.injections.Injection;
 import com.cleanup.todoc.injections.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
@@ -147,15 +148,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         return super.onOptionsItemSelected(item);
     }
 
-    // --- GET CURRENT PROJECT ---
-    private void getCurrentProject(long projectId){
-        this.mTaskViewModel.getProject(projectId).observe(this, this::getCurrentProjectId);
-    }
-
-    private long getCurrentProjectId(Project project) {
-        return project.getId();
-    }
-
     // --- GET ALL TASKS ---
     private void getAllTasks(){
         this.mTaskViewModel.getAllTasks().observe(this, this::updateTasks);
@@ -184,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             Project taskProject = null;
             if (dialogSpinner.getSelectedItem() instanceof Project) {
                 taskProject = (Project) dialogSpinner.getSelectedItem();
+
             }
 
             // If a name has not been set
@@ -193,11 +186,12 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If both project and name of the task have been set
             else if (taskProject != null) {
                 // TODO: Replace this by id of persisted task
-                long id = this.getCurrentProjectId(taskProject);
+                long id = 0;
 
 
                 Task task = new Task(
                         id,
+                        taskProject.getId(),
                         taskName,
                         new Date().getTime()
                 );

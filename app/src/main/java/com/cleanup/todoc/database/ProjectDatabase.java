@@ -46,9 +46,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
                 super.onCreate(db);
 
                 ContentValues tartampion = new ContentValues();
-                tartampion.put("id", Project.getProjectById(1).getId());
-                tartampion.put("name", Project.getProjectById(1).getName());
-                tartampion.put("color", Project.getProjectById(1).getColor());
+                tartampion.equals(Project.getProjectById(1));
 
                 ContentValues lucidia = new ContentValues();
                 lucidia.put("id", Project.getProjectById(2).getId());

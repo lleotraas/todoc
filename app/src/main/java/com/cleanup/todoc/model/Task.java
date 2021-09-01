@@ -3,6 +3,7 @@ package com.cleanup.todoc.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,8 +52,8 @@ public class Task {
      * @param name              the name of the task to set
      * @param creationTimestamp the timestamp when the task has been created to set
      */
-    public Task(long projectId, @NonNull String name, long creationTimestamp) {
-//        this.setId(id);
+    public Task(long mId, long projectId, @NonNull String name, long creationTimestamp) {
+        this.setId(mId);
         this.setProjectId(projectId);
         this.setName(name);
         this.setCreationTimestamp(creationTimestamp);
