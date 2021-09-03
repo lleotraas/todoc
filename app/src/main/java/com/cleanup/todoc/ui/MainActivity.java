@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @SuppressWarnings("NullableProblems")
     @NonNull
     private TextView lblNoTasks;
+
+    /**
+     * The persisted data
+     */
     private TaskViewModel mTaskViewModel;
 
 
@@ -147,19 +151,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         return super.onOptionsItemSelected(item);
     }
-
-    // --- GET ALL TASKS ---
-    private void getAllTasks(){
-        this.mTaskViewModel.getAllTasks().observe(this, this::updateTasks);
-    }
-
-    @Override
-    public void onDeleteTask(Task task) {
-        tasks.remove(task);
-        this.getAllTasks();
-        this.mTaskViewModel.deleteTask(task.getId());
-    }
-
 
     /**
      * Called when the user clicks on the positive button of the Create Task Dialog.
@@ -234,6 +225,25 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         tasks.add(task);
         updateTasks(tasks);
         this.mTaskViewModel.createTask(task);
+    }
+
+    /**
+     * Get all the persisted tasks.
+     */
+    private void getAllTasks(){
+        this.mTaskViewModel.getAllTasks().observe(this, this::updateTasks);
+    }
+
+    /**
+     * Delete the selected task.
+     *
+     * @param task the task that needs to be deleted
+     */
+    @Override
+    public void onDeleteTask(Task task) {
+        tasks.remove(task);
+        this.getAllTasks();
+        this.mTaskViewModel.deleteTask(task.getId());
     }
 
     /**

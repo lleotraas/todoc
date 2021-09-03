@@ -44,10 +44,6 @@ public class TaskViewModel extends ViewModel {
     }
 
     // --- FOR TASK ---
-    public LiveData<List<Task>> getTask(long projectId){
-        return taskDataSource.getTask(projectId);
-    }
-
     public LiveData<List<Task>> getAllTasks(){
         return taskDataSource.getAllTasks();
     }
@@ -61,12 +57,6 @@ public class TaskViewModel extends ViewModel {
     public void deleteTask(long taskId){
         executor.execute(()->{
             taskDataSource.deleteTask(taskId);
-        });
-    }
-
-    public void updateTask(Task task){
-        executor.execute(()->{
-            taskDataSource.updateTask(task);
         });
     }
 }
