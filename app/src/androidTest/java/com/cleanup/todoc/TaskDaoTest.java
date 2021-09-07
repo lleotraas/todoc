@@ -1,7 +1,6 @@
 package com.cleanup.todoc;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 
@@ -32,7 +31,7 @@ public class TaskDaoTest {
     // DATA SET FOR TEST
     private static long PROJECT_ID = 1;
     private static Project PROJECT_DEMO = new Project(PROJECT_ID,"test de projet", 000000);
-    private static Task NEW_TASK_WASHING = new Task(1, PROJECT_ID, "faire la vaisselle du test", 12);
+    private static Task NEW_TASK_DEMO = new Task(1, PROJECT_ID, "faire la vaisselle du test", 12);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -67,7 +66,7 @@ public class TaskDaoTest {
     @Test
     public void insertAndGetItems() throws InterruptedException{
         this.database.projectDao().createProject(PROJECT_DEMO);
-        this.database.taskDao().insertTask(NEW_TASK_WASHING);
+        this.database.taskDao().insertTask(NEW_TASK_DEMO);
 
         List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getAllTasks());
         assertTrue(tasks.size() == 1);
@@ -76,7 +75,7 @@ public class TaskDaoTest {
     @Test
     public void insertAndDeleteTask()throws InterruptedException{
         this.database.projectDao().createProject(PROJECT_DEMO);
-        this.database.taskDao().insertTask(NEW_TASK_WASHING);
+        this.database.taskDao().insertTask(NEW_TASK_DEMO);
         List<Task> taskAdded = LiveDataTestUtil.getValue(this.database.taskDao().getAllTasks());
         this.database.taskDao().deleteTask(taskAdded.get(0).getId());
 

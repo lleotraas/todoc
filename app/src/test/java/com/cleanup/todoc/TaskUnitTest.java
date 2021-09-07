@@ -1,5 +1,8 @@
 package com.cleanup.todoc;
 
+import android.arch.persistence.room.RoomDatabase;
+
+import com.cleanup.todoc.database.ProjectDatabase;
 import com.cleanup.todoc.model.Task;
 
 import org.junit.Test;
@@ -18,6 +21,11 @@ import static org.junit.Assert.assertSame;
  * @author Gaëtan HERFRAY
  */
 public class TaskUnitTest {
+
+
+
+
+
     @Test
     public void test_projects() {
         final Task task1 = new Task(1, 1, "task 1", new Date().getTime());

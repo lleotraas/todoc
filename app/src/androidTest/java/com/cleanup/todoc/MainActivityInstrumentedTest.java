@@ -1,5 +1,6 @@
 package com.cleanup.todoc;
 
+import android.support.test.espresso.ViewAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +16,11 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.cleanup.todoc.TestUtils.actionOnItemViewAtPosition;
 import static com.cleanup.todoc.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -118,5 +121,13 @@ public class MainActivityInstrumentedTest {
                 .check(matches(withText("zzz Tâche example")));
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText("aaa Tâche example")));
+
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
+                .perform(click());
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
+                .perform(click());
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
+                .perform(click());
+
     }
 }

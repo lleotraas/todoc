@@ -43,38 +43,15 @@ public abstract class ProjectDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-//    private static Callback prepopulateDatabase() {
-//        return new Callback() {
-//            @Override
-//            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-//                super.onCreate(db);
-//
-//                ContentValues tartampion = new ContentValues();
-//                tartampion.put("id", 1L);
-//                tartampion.put("name", "Projet Tartampion");
-//                tartampion.put("color", 0xFFEADAD1);
-//
-//                ContentValues lucidia = new ContentValues();
-//                lucidia.put("id", 2L);
-//                lucidia.put("name", "Projet Lucidia");
-//                lucidia.put("color", 0xFFB4CDBA);
-//
-//                ContentValues circus = new ContentValues();
-//                circus.put("id", 3L);
-//                circus.put("name", "Projet Circus");
-//                circus.put("color", 0xFFA3CED2);
-//            }
-//        };
-//    }
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             databaseWriteExecutor.execute(()->{
                 ProjectDao projectDao = INSTANCE.projectDao();
-                projectDao.createProject(Project.getProjectById(1));
-                projectDao.createProject(Project.getProjectById(2));
-                projectDao.createProject(Project.getProjectById(3));
+                projectDao.createProject(new Project(1L, "Projet Tartampion", 0xFFEADAD1));
+                projectDao.createProject(new Project(2L, "Projet Lucidia", 0xFFB4CDBA));
+                projectDao.createProject(new Project(3L, "Projet Circus", 0xFFA3CED2));
             });
         }
     };

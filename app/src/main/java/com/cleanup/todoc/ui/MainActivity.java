@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all projects available in the application
      */
-    private final Project[] allProjects = Project.getAllProjects();
+    private List<Project> allProjects;
 
     /**
      * List of all current tasks of the application
@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         this.configureViewModel();
         this.getAllTasks();
 
+
+        mTaskViewModel.getAllProject().observe(this, this::configureAllProjectList);
+
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,10 +124,15 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         });
     }
 
+    private void configureAllProjectList(List<Project> projects) {
+        allProjects = projects;
+        adapter.setProject(projects);
+    }
+
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         this.mTaskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
-
+        mTaskViewModel.init();
     }
 
     @Override
