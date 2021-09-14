@@ -10,6 +10,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+
 import com.cleanup.todoc.model.Project;
 
 import java.util.List;
@@ -17,12 +18,9 @@ import java.util.List;
 @Dao
 public interface ProjectDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void createProject(Project project);
 
     @Query("SELECT * FROM Project")
     LiveData<List<Project>> getAllProject();
-
-    @Query("SELECT * FROM Project WHERE id = :id")
-    LiveData<Project> getProject(long id);
 }

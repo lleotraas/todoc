@@ -1,13 +1,13 @@
 package com.cleanup.todoc.database;
 
+
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
+
 
 import com.cleanup.todoc.database.dao.ProjectDao;
 import com.cleanup.todoc.database.dao.TaskDao;

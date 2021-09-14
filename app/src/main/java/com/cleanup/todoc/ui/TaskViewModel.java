@@ -5,11 +5,11 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.Nullable;
 
 import com.cleanup.todoc.model.Project;
+import com.cleanup.todoc.model.TaskWithProject;
 import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -42,10 +42,10 @@ public class TaskViewModel extends ViewModel {
     public LiveData<List<Project>> getAllProject(){
         return this.currentProject;
     }
-    public LiveData<Project> getProject(long id){ return projectDataSource.getProject(id);}
+
     // --- FOR TASK ---
-    public LiveData<List<Task>> getAllTasks(){
-        return taskDataSource.getAllTasks();
+    public LiveData<List<TaskWithProject>> getTasksWithProject(){
+        return taskDataSource.getTasksWithProject();
     }
 
     public void createTask(Task task){

@@ -19,10 +19,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.ProjectDatabase;
 import com.cleanup.todoc.injections.Injection;
 import com.cleanup.todoc.injections.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
+import com.cleanup.todoc.model.TaskWithProject;
 import com.cleanup.todoc.model.Task;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * List of all current tasks of the application
      */
     @NonNull
-    private final ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<TaskWithProject> tasks = new ArrayList<>();
 
     /**
      * The adapter which handles the list of tasks
@@ -111,8 +111,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks.setAdapter(adapter);
 
         this.configureViewModel();
-        this.getAllTasks();
-
+        this.getTasksWithProject();
 
         mTaskViewModel.getAllProject().observe(this, this::configureAllProjectList);
 
@@ -126,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     private void configureAllProjectList(List<Project> projects) {
         allProjects = projects;
-        adapter.setProject(projects);
     }
 
     private void configureViewModel() {
@@ -155,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-        this.getAllTasks();
+        this.getTasksWithProject();
 
         return super.onOptionsItemSelected(item);
     }
@@ -230,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        tasks.add(task);
         updateTasks(tasks);
         this.mTaskViewModel.createTask(task);
     }
@@ -238,8 +235,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * Get all the persisted tasks.
      */
-    private void getAllTasks(){
-        this.mTaskViewModel.getAllTasks().observe(this, this::updateTasks);
+    private void getTasksWithProject(){
+        this.mTaskViewModel.getTasksWithProject().observe(this, this::updateTasks);
     }
 
     /**
@@ -248,16 +245,16 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task that needs to be deleted
      */
     @Override
-    public void onDeleteTask(Task task) {
+    public void onDeleteTask(TaskWithProject task) {
         tasks.remove(task);
-        this.getAllTasks();
-        this.mTaskViewModel.deleteTask(task.getId());
+        this.getTasksWithProject();
+        this.mTaskViewModel.deleteTask(task.task.getId());
     }
 
     /**
      * Updates the list of tasks in the UI
      */
-    private void updateTasks(List<Task> tasks) {
+    private void updateTasks(List<TaskWithProject> tasks) {
         if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
@@ -279,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     break;
             }
             adapter.updateTasks(tasks);
+            
         }
     }
 
