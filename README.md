@@ -5,3 +5,16 @@
 
 Todoc est une application de gestion de tâches ménagères affectées aux employés pour l'entreprise Cleanup.
 
+### Installation
+
+Dans android studio :
+  * Importez le projet avec android studio.
+Dans un smartphone android :
+  * Téléchargez le projet.
+  * Allez dans : todoc-master\app\release.
+  * Copiez le fichier : app-release.apk dans votre smartphone.
+  * Exécutez le fichier avec votre smartphone.
+
+### Auteurs
+ Charles Freddy
+ Cleanup
