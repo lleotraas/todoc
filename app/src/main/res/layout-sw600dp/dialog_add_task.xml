@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp">
+
+    <EditText
+        android:id="@+id/txt_task_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_name_hint"
+        android:importantForAutofill="no"
+        android:inputType="textAutoComplete"
+        tools:ignore="UnusedAttribute" />
+
+    <Spinner
+        android:id="@+id/project_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal_size"
+        android:paddingBottom="@dimen/padding_bottom_small_size"
+        android:textSize="@dimen/small_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_small_size"
+        android:layout_marginEnd="@dimen/margin_small_size"
+        android:background="@color/spinner_bottom_line" />
+</LinearLayout>

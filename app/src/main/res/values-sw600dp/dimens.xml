@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    // --- TEXT ---
+    <dimen name="xlarge_text_size">36sp</dimen>
+    <dimen name="normal_text_size">30sp</dimen>
+    <dimen name="small_text_size">28sp</dimen>
+
+    // --- PADDING ---
+    <dimen name="padding_bottom">88dp</dimen>
+    <dimen name="padding_bottom_small_size">12dp</dimen>
+
+    // --- MARGIN ---
+    <dimen name="margin_normal_size">16dp</dimen>
+    <dimen name="margin_small_size">8dp</dimen>
+
+    // --- FAB ---
+    <dimen name="fab_width">86dp</dimen>
+    <dimen name="fab_height">@dimen/fab_width</dimen>
+    <dimen name="fab_img_size">30dp</dimen>
+
+    // --- IMAGE VIEW ---
+    <dimen name="image_view_width">76dp</dimen>
+    <dimen name="image_view_height">@dimen/image_view_width</dimen>
+
+</resources>
