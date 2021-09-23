@@ -23,7 +23,7 @@ public class TaskDataRepository {
     public LiveData<List<TaskWithProject>> getTasksWithProject(){ return this.mTaskDao.getTasksWithProject(); }
     // --- CREATE ---
     public void createTask(Task task){
-        mTaskDao.insertTask(task);
+        mTaskDao.createTask(task);
     }
     // --- DELETE ---
     public void deleteTask(long taskId){

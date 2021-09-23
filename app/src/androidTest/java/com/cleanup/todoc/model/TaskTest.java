@@ -6,7 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.cleanup.todoc.LiveDataTestUtil;
-import com.cleanup.todoc.database.ProjectDatabase;
+import com.cleanup.todoc.database.TodocDatabase;
 
 import junit.framework.TestCase;
 
@@ -27,7 +27,7 @@ import java.util.List;
 public class TaskTest extends TestCase {
 
     // FOR DATA
-    private ProjectDatabase database;
+    private TodocDatabase database;
 
     // DATA SET FOR TEST
     private static long FIRST_PROJECT_ID = 1;
@@ -54,15 +54,15 @@ public class TaskTest extends TestCase {
     @Before
     public void initDb()throws InterruptedException{
         this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
-                ProjectDatabase.class)
+                TodocDatabase.class)
                 .allowMainThreadQueries()
                 .build();
         this.database.projectDao().createProject(FIRST_PROJECT_DEMO);
         this.database.projectDao().createProject(SECOND_PROJECT_DEMO);
         this.database.projectDao().createProject(THIRD_PROJECT_DEMO);
-        this.database.taskDao().insertTask(TASK_DEMO_1);
-        this.database.taskDao().insertTask(TASK_DEMO_2);
-        this.database.taskDao().insertTask(TASK_DEMO_3);
+        this.database.taskDao().createTask(TASK_DEMO_1);
+        this.database.taskDao().createTask(TASK_DEMO_2);
+        this.database.taskDao().createTask(TASK_DEMO_3);
 
         taskWithProject = LiveDataTestUtil.getValue(this.database.taskDao().getTasksWithProject());
 

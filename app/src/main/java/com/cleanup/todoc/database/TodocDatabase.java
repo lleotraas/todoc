@@ -21,20 +21,20 @@ import java.util.concurrent.Executors;
  * Created by lleotraas on 18.
  */
 @Database(entities = {Task.class, Project.class}, version = 1, exportSchema = false)
-public abstract class ProjectDatabase extends RoomDatabase {
+public abstract class TodocDatabase extends RoomDatabase {
 
-    private static volatile ProjectDatabase INSTANCE;
+    private static volatile TodocDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract TaskDao taskDao();
     public abstract ProjectDao projectDao();
 
-    public static ProjectDatabase getInstance(Context context){
+    public static TodocDatabase getInstance(Context context){
         if (INSTANCE == null){
-            synchronized (ProjectDatabase.class){
+            synchronized (TodocDatabase.class){
                 if (INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), ProjectDatabase.class, "TodocDatabase.db")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), TodocDatabase.class, "TodocDatabase.db")
                                                     .addCallback(sRoomDatabaseCallback)
                                                     .build();
                 }

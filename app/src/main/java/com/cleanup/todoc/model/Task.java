@@ -3,6 +3,7 @@ package com.cleanup.todoc.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -15,7 +16,10 @@ import java.util.Comparator;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity
+@Entity(foreignKeys = @ForeignKey(
+        entity = Project.class,
+        parentColumns = "id",
+        childColumns = "project_id"))
 public class Task {
     /**
      * The unique identifier of the task

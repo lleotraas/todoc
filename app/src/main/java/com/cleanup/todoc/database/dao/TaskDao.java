@@ -17,11 +17,11 @@ import java.util.List;
 @Dao
 public interface TaskDao {
 
+    @Insert
+    long createTask(Task task);
+
     @Query("SELECT * FROM Task")
     LiveData<List<TaskWithProject>> getTasksWithProject();
-
-    @Insert
-    long insertTask(Task task);
 
     @Query("DELETE FROM Task WHERE mId = :taskId")
     int deleteTask(long taskId);

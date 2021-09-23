@@ -5,7 +5,7 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 
-import com.cleanup.todoc.database.ProjectDatabase;
+import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.model.TaskWithProject;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class TaskDaoTest {
 
     // FOR DATA
-    private ProjectDatabase database;
+    private TodocDatabase database;
 
     // DATA SET FOR TEST
     private static long PROJECT_ID = 1;
@@ -41,7 +41,7 @@ public class TaskDaoTest {
     @Before
     public void initDb()throws InterruptedException{
         this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
-                        ProjectDatabase.class)
+                        TodocDatabase.class)
                         .allowMainThreadQueries()
                         .build();
     }
@@ -68,7 +68,7 @@ public class TaskDaoTest {
     @Test
     public void insertAndGetItems() throws InterruptedException{
         this.database.projectDao().createProject(PROJECT_DEMO);
-        this.database.taskDao().insertTask(NEW_TASK_DEMO);
+        this.database.taskDao().createTask(NEW_TASK_DEMO);
 
         List<TaskWithProject> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasksWithProject());
         assertTrue(tasks.size() == 1);
@@ -77,7 +77,7 @@ public class TaskDaoTest {
     @Test
     public void insertAndDeleteTask()throws InterruptedException{
         this.database.projectDao().createProject(PROJECT_DEMO);
-        this.database.taskDao().insertTask(NEW_TASK_DEMO);
+        this.database.taskDao().createTask(NEW_TASK_DEMO);
         List<TaskWithProject> taskAdded = LiveDataTestUtil.getValue(this.database.taskDao().getTasksWithProject());
         this.database.taskDao().deleteTask(taskAdded.get(0).task.getId());
 
